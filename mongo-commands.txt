@@ -1,0 +1,26 @@
+//start mongo service
+brew services start mongodb-community@5.0
+
+//stop mongo service
+brew services stop mongodb-community@5.0
+
+//enter mongo cli
+mongosh
+
+//switch to a specified database
+use <db_name>
+
+//list all collections within a database
+show collections
+
+//insert a document into a collection
+db.tours.insertOne({ name: "The Sea Explorer", price: 497, rating: 4.8 })
+db.tours.insertMany([{ name: "The Sea Explorer", price: 497, rating: 4.8}, { name: "The Snow Adventure", price: 997, rating: 4.9, difficulty: "easy"}])
+
+//query the tours collection 
+db.tours.find({ name: "The Sea Explorer })
+db.tours.find({price: {$lte:500} })
+
+//run conditional queries
+db.tours.find({price: {$lte: 500} })
+db.tours.find({ price: {$lte: 500}, rating: {$gte: 4.8}  })
