@@ -18,7 +18,7 @@ db.tours.insertOne({ name: "The Sea Explorer", price: 497, rating: 4.8 })
 db.tours.insertMany([{ name: "The Sea Explorer", price: 497, rating: 4.8}, { name: "The Snow Adventure", price: 997, rating: 4.9, difficulty: "easy"}])
 
 //query the tours collection --------------------------------------------------------------
-db.tours.find({ name: "The Sea Explorer })
+db.tours.find({ name: "The Sea Explorer" })
 db.tours.find({price: {$lte:500} })
 
 //run conditional queries--------------------------------------------------------------
@@ -36,3 +36,18 @@ natours-test> db.tours.find({ $or: [ {price: {$gt: 500}}, {rating: {$gte: 4.8}} 
 
 //passing in object for projections - only select certain fields in output
 db.tours.find({ $or: [ {price: {$gt: 500}}, {rating: {$gte: 4.8}}  ]  }, {name: 1})
+
+
+
+--------------------------------------UPDATING DOCUMENTS----------------------------------------
+$set - operator to update the value of a document
+db.tours.updateOne()
+
+//first select document you want to update, thenadd data you want to update
+db.tours.updateOne({ name: "The Snow Adventure" }, { $set: {price: 597} })
+
+//add a new property to a document that matches a query
+db.tours.updateMany({ price: {$gte: 500}, rating: {$gte: 4.8} }, { $set: {premium: true} })
+
+//replace content of document
+db.tours.replaceOne(search query, new data)
