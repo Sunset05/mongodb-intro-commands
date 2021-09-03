@@ -1,26 +1,38 @@
-//start mongo service
+//start mongo service--------------------------------------------------------------
 brew services start mongodb-community@5.0
 
-//stop mongo service
+//stop mongo service--------------------------------------------------------------
 brew services stop mongodb-community@5.0
 
-//enter mongo cli
+//enter mongo cli--------------------------------------------------------------
 mongosh
 
-//switch to a specified database
+//switch to a specified database--------------------------------------------------------------
 use <db_name>
 
-//list all collections within a database
+//list all collections within a database--------------------------------------------------------------
 show collections
 
-//insert a document into a collection
+//insert a document into a collection--------------------------------------------------------------
 db.tours.insertOne({ name: "The Sea Explorer", price: 497, rating: 4.8 })
 db.tours.insertMany([{ name: "The Sea Explorer", price: 497, rating: 4.8}, { name: "The Snow Adventure", price: 997, rating: 4.9, difficulty: "easy"}])
 
-//query the tours collection 
+//query the tours collection --------------------------------------------------------------
 db.tours.find({ name: "The Sea Explorer })
 db.tours.find({price: {$lte:500} })
 
-//run conditional queries
+//run conditional queries--------------------------------------------------------------
+$lte - less than or equals
+$lt - less than
+$gte - greater than or equals
+$gt - greater than
+$or - allows for twe conditions to evaluate at same time
+
 db.tours.find({price: {$lte: 500} })
 db.tours.find({ price: {$lte: 500}, rating: {$gte: 4.8}  })
+
+db.tours.find({ $or: [ {price: {$lte: 500}}, {rating: {$gte: 4.8}}  ]  })
+natours-test> db.tours.find({ $or: [ {price: {$gt: 500}}, {rating: {$gte: 4.8}}  ]  })
+
+//passing in object for projections - only select certain fields in output
+db.tours.find({ $or: [ {price: {$gt: 500}}, {rating: {$gte: 4.8}}  ]  }, {name: 1})
